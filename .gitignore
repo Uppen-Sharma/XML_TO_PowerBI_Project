@@ -1,0 +1,19 @@
+# Node.js
+node_modules/
+frontend/dist/
+frontend/node_modules/
+.npm/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+venv/
+env/
+.env
+backend/generated/
+
+# OS files
+.DS_Store
+Thumbs.db
