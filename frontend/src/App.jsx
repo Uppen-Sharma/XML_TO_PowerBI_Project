@@ -100,10 +100,12 @@ function App() {
               className={`relative border-2 border-dashed rounded-2xl p-12 text-center transition-all
                 duration-200 ease-in-out cursor-pointer
                 ${
-                  isDragOver
-                    ? "border-primary bg-primary/10 scale-[1.02]"
+                  isDragOver || file
+                    ? "border-primary bg-primary/10"
                     : "border-border hover:border-primary hover:bg-container-bg"
-                }`}
+                }
+                ${isDragOver ? "scale-[1.02]" : ""}
+              `}
               onDragOver={(e) => {
                 e.preventDefault();
                 setIsDragOver(true);
