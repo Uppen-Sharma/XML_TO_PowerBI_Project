@@ -10,7 +10,7 @@ The project has been refactored into a clear two-tier architecture:
 
 * **`/backend`**: A FastAPI Python application.
   * `main.py`: The API server that handles `/generate` and `/download` requests.
-  * `pbip_generator.py`: The core engine that parses Cognos XML to extract dimensions, fields, and measures, and translates them into Tabular Model Definition Language (TMDL).
+  * `pbip_generator.py`: The core engine that parses Cognos XML to extract dimensions, fields, and measures, and translates them into Tabular Object Model (TOM) JSON.
   * `requirements.txt`: Python dependencies.
 * **`/frontend`**: A React Single Page Application (SPA).
   * Bootstrapped with **Vite** and styled using **Tailwind CSS v4**.
@@ -24,7 +24,7 @@ The project has been refactored into a clear two-tier architecture:
 1. **Upload**: The user drops a Cognos `.xml` file into the React frontend.
 2. **Process**: The React frontend sends the file to the FastAPI backend (`POST /generate`).
 3. **Parse**: The `pbip_generator.py` script traverses the XML to identify data items. It uses heuristics to classify them into standard `Int64`, `Double`, or `String` data types, and generates DAX measure definitions.
-4. **Compile**: The parsed components are organized into standard Power BI Semantic Model tables (`Sales`, `DimDate`, `DimOrderMethod`) and saved using the text-based TMDL format.
+4. **Compile**: The parsed components are organized into standard Power BI Semantic Model tables (`Sales`, `DimDate`, `DimOrderMethod`) and saved using the standard `model.bim` (JSON) format.
 5. **Return**: The backend bundles the `semantic-model` directory, `report.json`, and `dataSources.json` into a `.zip` file and sends the filename back to the frontend.
 6. **Download**: The frontend automatically hits `GET /download` with a hidden anchor tag to trigger a cross-browser compatible file download.
 
@@ -76,13 +76,13 @@ Once the `.zip` file is downloaded, it contains the internal configuration of a 
 
 ### Method 1: Content Inspection
 1. Unzip the generated file.
-2. Open the `semantic-model/model.tmdl` file in a text editor like VS Code.
-3. You will see the plain-text Tabular Model representation of your data structures and DAX measures.
+2. Open the `semantic-model/model.bim` file in a text editor like VS Code.
+3. You will see the Tabular Object Model (TOM) JSON representation of your data structures and DAX measures.
 
 ### Method 2: Visualizing in Tabular Editor
 1. Download and open [Tabular Editor 2 or 3](https://tabulareditor.com/).
 2. Select **File -> Open -> From Folder...** and choose the extracted `semantic-model` directory.
-3. Tabular Editor will parse the `.tmdl` files and display your complete logical Semantic Model (Tables, Columns, Relationships, Measures).
+3. Tabular Editor will parse the `.bim` files and display your complete logical Semantic Model (Tables, Columns, Relationships, Measures).
 
 ### Method 3: Using Power BI Desktop
 To open the project locally in Power BI:

@@ -30,9 +30,13 @@ GENERATED_DIR.mkdir(exist_ok=True)
 @app.post('/generate')
 async def generate(file: UploadFile = File(...)):
     try:
+        import uuid
         xml_stem = Path(file.filename).stem          # "Global Sales View"
         zip_filename = f"{xml_stem}.zip"             # "Global Sales View.zip"  (user-facing name)
-        disk_filename = f"{xml_stem}.zip"            # same — no collision risk here since sync
+        
+        # Append a unique ID to prevent concurrent users from overwriting each other's files
+        unique_id = uuid.uuid4().hex[:8]
+        disk_filename = f"{unique_id}_{xml_stem}.zip"
 
         with tempfile.TemporaryDirectory() as tmpdir:
             xml_path = os.path.join(tmpdir, file.filename)

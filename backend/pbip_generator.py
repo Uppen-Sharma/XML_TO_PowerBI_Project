@@ -133,7 +133,8 @@ def generate_pbip(xml_path, output_folder='pbip-output', zip_name=None):
 
     sm_dir = os.path.join(output_folder, 'semantic-model')
     os.makedirs(sm_dir, exist_ok=True)
-    with open(os.path.join(sm_dir, 'model.tmdl'), 'w', encoding='utf-8') as f:
+    # The output is Tabular Object Model JSON, so it must be saved as model.bim
+    with open(os.path.join(sm_dir, 'model.bim'), 'w', encoding='utf-8') as f:
         json.dump(model, f, indent=4)
 
     stem = zip_name if zip_name else os.path.basename(output_folder)
