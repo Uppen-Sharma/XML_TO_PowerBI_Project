@@ -44,3 +44,22 @@
   --shadow-btn: 0 1px 3px rgba(12, 161, 182, 0.35);
   --shadow-chip: 0 2px 6px rgba(212, 5, 17, 0.15);
 }
+
+@layer utilities {
+  .bg-dashboard {
+    background-image:
+      radial-gradient(rgba(141, 155, 174, 0.28) 1px, transparent 1px),
+      linear-gradient(
+        135deg,
+        var(--color-bg-gradient-start) 0%,
+        rgba(255, 255, 255, 0.95) 45%,
+        var(--color-bg-gradient-end) 100%
+      );
+
+    background-size:
+      18px 18px,
+      cover;
+
+    background-position: center, center;
+  }
+}

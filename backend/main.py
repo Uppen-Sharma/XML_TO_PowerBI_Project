@@ -9,7 +9,7 @@ import shutil
 from pbip_generator import generate_pbip
 
 app = FastAPI(
-    title='PBIP Generator API',
+    title='PBI Accelerator API',
     description='Upload a Cognos XML and download PBIP.',
     version='1.0'
 )

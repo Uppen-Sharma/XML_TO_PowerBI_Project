@@ -1,4 +1,4 @@
-# PBIP Generator (Cognos XML to Power BI Project)
+# PBI Accelerator (Cognos XML to Power BI Project)
 
 A full-stack application that seamlessly converts Cognos XML report definitions into Power BI Project (PBIP) format. The application is split into a **FastAPI** backend that handles the XML parsing and PBIP generation, and a modern **React + Vite** frontend with Tailwind CSS for an intuitive drag-and-drop user experience.
 
