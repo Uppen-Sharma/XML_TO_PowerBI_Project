@@ -38,13 +38,13 @@ const ProtectedRoute = ({ children }) => {
  * Handles the left-side branding, logo, and main heading.
  */
 const BrandSection = () => (
-  <div className="relative flex flex-col px-6 py-16 sm:px-10 lg:px-[7vw] lg:pt-20 lg:pb-12 lg:w-[45%] flex-shrink-0 lg:h-screen lg:overflow-y-auto custom-scrollbar">
-    <div className="flex flex-col items-start space-y-12 lg:space-y-[9vh]">
+  <div className="relative flex flex-col px-6 py-12 sm:px-10 lg:px-[7vw] lg:pt-[10vh] lg:pb-12 lg:w-[45%] flex-shrink-0 lg:h-screen lg:overflow-y-auto custom-scrollbar">
+    <div className="flex flex-col items-start space-y-10 lg:space-y-[8vh]">
       <div className="flex items-start">
         <img
           src="/logo.png"
           alt="SRM Tech Logo"
-          className="h-12 sm:h-16 lg:h-[clamp(3.5rem,7.5vh,5.5rem)] w-auto object-contain"
+          className="h-[clamp(3rem,8vh,5rem)] w-auto object-contain"
         />
       </div>
       <div className="w-full">
@@ -75,9 +75,9 @@ const UploadCard = ({
   fileInputRef 
 }) => (
   <div className="bg-card-bg rounded-[var(--radius-card)] shadow-card hover:shadow-card-hover transition-shadow border border-card-border flex flex-col min-h-0 w-full overflow-hidden">
-    <div className="p-5 sm:p-8 lg:p-10 flex flex-col min-h-0 flex-grow">
+    <div className="p-5 sm:p-8 lg:p-[4vh] flex flex-col min-h-0 flex-grow">
       <div
-        className={`relative border-2 border-dashed rounded-2xl p-6 sm:p-10 text-center transition-all duration-200 ease-in-out cursor-pointer flex flex-col items-center justify-center flex-grow min-h-[200px] lg:min-h-[280px]
+        className={`relative border-2 border-dashed rounded-2xl p-6 sm:p-10 text-center transition-all duration-200 ease-in-out cursor-pointer flex flex-col items-center justify-center flex-grow min-h-[200px] lg:min-h-[26vh]
           ${isDragOver || file ? "border-primary bg-primary/10" : "border-border hover:border-primary hover:bg-container-bg"}
           ${isDragOver ? "scale-[1.01]" : ""}
         `}
@@ -95,8 +95,8 @@ const UploadCard = ({
         />
 
         <div className="flex flex-col items-center justify-center space-y-4 pointer-events-none break-all">
-          <div className={`h-14 w-14 sm:h-16 sm:w-16 lg:h-20 lg:w-20 rounded-full flex items-center justify-center mb-1 ${file ? "bg-accent/20 text-accent" : "bg-primary/20 text-primary"}`}>
-            {file ? <CheckCircle className="h-7 w-7 sm:h-8 sm:w-8 lg:h-10 lg:w-10" /> : <UploadCloud className="h-7 w-7 sm:h-8 sm:w-8 lg:h-10 lg:w-10" />}
+          <div className={`h-14 w-14 sm:h-16 sm:w-16 lg:h-[8vh] lg:w-[8vh] rounded-full flex items-center justify-center mb-1 ${file ? "bg-accent/20 text-accent" : "bg-primary/20 text-primary"}`}>
+            {file ? <CheckCircle className="h-7 w-7 sm:h-8 sm:w-8 lg:h-[4vh] lg:w-[4vh]" /> : <UploadCloud className="h-7 w-7 sm:h-8 sm:w-8 lg:h-[4vh] lg:w-[4vh]" />}
           </div>
           <div className="text-[clamp(1rem,1.4vw,1.25rem)] font-medium text-black leading-snug whitespace-nowrap">
             {file ? file.name : "Drag & drop your XML here"}
@@ -142,9 +142,9 @@ const UploadCard = ({
       </div>
     </div>
 
-    <div className="bg-container-bg p-4 lg:p-5 border-t border-card-border text-center flex items-center justify-center space-x-2 flex-shrink-0 mt-auto">
+    <div className="bg-container-bg p-4 lg:p-[2vh] border-t border-card-border text-center flex items-center justify-center space-x-2 flex-shrink-0 mt-auto">
       <Lock className="h-4 w-4 text-text-muted flex-shrink-0" />
-      <p className="text-[10px] sm:text-xs lg:text-sm text-text-muted leading-tight whitespace-nowrap">
+      <p className="text-[10px] sm:text-xs lg:text-[clamp(0.7rem,1vw,0.875rem)] text-text-muted leading-tight whitespace-nowrap">
         Your files are processed securely and are not stored permanently.
       </p>
     </div>
@@ -215,7 +215,7 @@ const Dashboard = () => {
   }, [file]);
 
   return (
-    <div className="min-h-screen lg:h-screen bg-dashboard overflow-x-hidden flex flex-col" style={{ fontFamily: "var(--font-sans)" }}>
+    <div className="min-h-screen lg:h-screen bg-dashboard lg:overflow-hidden flex flex-col" style={{ fontFamily: "var(--font-sans)" }}>
       {/* Top Header for Logout */}
       <div className="absolute top-6 right-6 z-20">
         <button
@@ -227,14 +227,14 @@ const Dashboard = () => {
         </button>
       </div>
 
-      <div className="flex flex-col lg:flex-row flex-grow w-full min-h-0">
+      <div className="flex flex-col lg:flex-row flex-grow w-full min-h-0 lg:overflow-hidden">
         <BrandSection />
         
-        <div className="flex flex-col lg:w-[55%] flex-grow lg:h-screen overflow-y-auto custom-scrollbar">
+        <div className="flex flex-col lg:w-[55%] flex-grow min-h-0 lg:h-full lg:overflow-hidden">
           <div className="w-full flex flex-col px-4 py-8 lg:px-[5vw] lg:py-[6vh] min-h-full">
-            <div className="flex flex-col flex-grow items-center justify-center">
-              <div className="w-full max-w-2xl flex flex-col">
-                <div className="text-center mb-6 lg:mb-8 flex-shrink-0">
+            <div className="flex flex-col flex-grow items-center justify-center min-h-0">
+              <div className="w-full max-w-2xl flex flex-col min-h-0">
+                <div className="text-center mb-6 lg:mb-[4vh] flex-shrink-0">
                   <h3 className="text-[clamp(1.1rem,1.6vw,1.4rem)] font-black text-[#0b132b] tracking-tight leading-tight whitespace-nowrap">
                     Extract Data
                   </h3>
