@@ -1,65 +1,81 @@
 # PBI Accelerator (Cognos XML to Power BI Project)
 
-A high-performance enterprise solution that seamlessly converts Cognos XML report definitions into Power BI Project (PBIP) format. This application combines a robust **FastAPI** backend for complex XML parsing with a premium **React + Vite** frontend, designed for professional users who need to migrate legacy reporting assets to modern Power BI environments.
+A high-performance enterprise solution that seamlessly converts Cognos XML report definitions into Power BI Project (PBIP) format. This application combines a robust **FastAPI** backend with a premium **React + Vite** frontend, featuring **AI-assisted DAX generation** and an **interactive relationship designer**.
 
 ---
 
 ## ✨ Key Features
 
-- **Premium UI/UX**: Modern, split-screen interface with SRM Tech branding, high-fidelity micro-animations, and responsive design optimized for productivity.
-- **Enterprise Security**: Built-in support for **Microsoft Entra ID (Azure AD)** authentication via `oauth2-proxy` and header-based verification.
-- **Smart Parsing Engine**: Automatically extracts dimensions, fields, and measures from Cognos XML, translating them into the Power BI Tabular Object Model (TOM).
-- **Automated PBIP Generation**: Generates a complete Power BI Project structure, including `model.bim`, `report.json`, and `dataSources.json`, delivered as a ready-to-use `.zip` archive.
-- **Secure Processing**: Transient file handling ensures that uploaded XMLs and generated projects are processed in-memory or in temporary storage, adhering to data privacy standards.
+- **End-to-End Migration Wizard**: A structured 5-step workflow guiding users from raw XML upload to a verified Power BI Project.
+- **AI-Powered DAX Engine**: Integrated support for **Google Gemini AI** to automatically translate Cognos expressions into optimized DAX, with built-in validation and performance linting.
+- **Visual Relationship Designer**: Interactive **ReactFlow**-powered tool to define and manage relationships between datasets, ensuring model integrity.
+- **Pro-Grade DAX Editor**: Integrated **Monaco Editor** for a VS Code-like editing experience during field mapping.
+- **Advanced Metadata Preview**: Deep inspection of extracted queries, columns, and measures before final generation.
+- **Premium UI/UX**: Modern interface with SRM Tech branding, high-fidelity micro-animations, and responsive design optimized for productivity.
+- **Enterprise Security**: Built-in support for **Microsoft Entra ID (Azure AD)** authentication and domain-restricted access.
+
+---
+
+## 🚀 The Migration Workflow
+
+1.  **Upload**: Drag & drop your Cognos Metadata XML file.
+2.  **Review**: Inspect the extracted logical model (Queries, Fields, Measures).
+3.  **Design Relations**: Use the visual designer to connect datasets (1:1, 1:N).
+4.  **AI Mapping & DAX**: Refine field mappings and use AI to generate/validate complex DAX measures.
+5.  **Generate**: Download a production-ready `.zip` archive containing the full PBIP structure.
 
 ---
 
 ## 🏗️ Architecture
 
-The project is structured as a modern monorepo:
+The project is structured as a modular monorepo:
 
-- **`/backend`**: Python FastAPI application.
-  - `main.py`: Enterprise-grade API with authentication middleware and global exception handling.
-  - `pbip_generator.py`: The core transformation engine using XML heuristics and TOM mapping.
-- **`/frontend`**: React 19 SPA.
-  - **Vite 6** & **Tailwind CSS 4**: Optimized for lightning-fast development and minimal bundle size.
-  - **Lucide React**: Premium iconography.
-  - **Protected Routes**: Integrated authentication flow with support for local development and production SSO.
+### 🐍 Backend (FastAPI)
+- **`/engine`**: The core transformation logic.
+  - `parser`: specialized Cognos XML parsing logic.
+  - `model`: builders for the Tabular Object Model (TOM).
+  - `validator`: schema and integrity checks.
+- **`/ai`**: AI orchestration layer.
+  - `dax_generator.py`: Prompt engineering and LLM integration (Gemini/Rule-based).
+  - `dax_validator.py`: Static analysis and reference checking for DAX.
+- **`main.py`**: Enterprise API with auth middleware and global exception handling.
+
+### ⚛️ Frontend (React 19)
+- **`MigrationWizard.jsx`**: Orchestrates the multi-step migration state.
+- **`RelationshipDesigner.jsx`**: Visual schema mapping using **ReactFlow**.
+- **`DaxEditor.jsx`**: Pro-grade DAX editor powered by **Monaco Editor**.
+- **Tech Stack**: Vite 6, Tailwind CSS 4, Axios, Lucide React, ReactFlow, Monaco Editor.
 
 ---
 
-## 🚀 Getting Started
+## 🛠️ Setup & Installation
 
 ### 1. Environment Configuration
 
-Both tiers require environment variables. Copy the examples to get started:
+Copy the example files and configure your keys:
 
 ```bash
-# In /backend
-cp .env.example .env
+# Backend (.env)
+AUTH_MODE=dev
+GEMINI_API_KEY=your_key_here
+ALLOWED_DOMAINS=@srmtech.com
 
-# In /frontend
-cp .env.example .env
+# Frontend (.env)
+VITE_API_URL=http://localhost:8000
+VITE_AUTH_MODE=dev
 ```
 
-| Variable          | Description                                     | Default        |
-| :---------------- | :---------------------------------------------- | :------------- |
-| `AUTH_MODE`       | Set to `dev` for local testing, `prod` for SSO. | `dev`          |
-| `ALLOWED_DOMAINS` | Restricted email domains (comma-separated).     | `@srmtech.com` |
-
-### 2. Start the Backend (FastAPI)
+### 2. Start the Backend
 
 ```bash
 cd backend
 python -m venv venv
-source venv/bin/activate  # or .\venv\Scripts\activate on Windows
+# Activate venv (Windows: .\venv\Scripts\activate | Unix: source venv/bin/activate)
 pip install -r requirements.txt
 python main.py
 ```
 
-_API will be live at `http://localhost:8000`._
-
-### 3. Start the Frontend (Vite)
+### 3. Start the Frontend
 
 ```bash
 cd frontend
@@ -67,34 +83,16 @@ npm install
 npm run dev
 ```
 
-_UI will be live at `http://localhost:5173`._
-
----
-
-## 🔐 Authentication Flow
-
-The application supports two primary authentication modes defined via `.env`:
-
-1.  **Development (`dev`)**: A mock login screen for local testing. Any email passing domain validation can access the dashboard.
-2.  **Production (`prod`)**: Designed to run behind a reverse proxy (like NGINX) with `oauth2-proxy`. The backend validates `X-Auth-Request-Email` and `X-Auth-Request-User` headers injected by the proxy after a successful Microsoft Entra ID login.
-
----
-
-## 🛠️ Tech Stack
-
-- **Frontend**: React 19, Vite 6, Tailwind CSS 4, Axios, React Router 7, Lucide React.
-- **Backend**: Python 3.10+, FastAPI, Uvicorn, XML.etree, Python-Dotenv.
-- **Deployment**: Docker-ready with multi-stage builds and static file serving.
-
 ---
 
 ## 🧪 Output Verification
 
-Once you download the generated `.zip` project:
+The generated `.zip` includes:
+1.  **`model.bim`**: The full Tabular Object Model.
+2.  **`definition.pbir`**: Report and visual definitions.
+3.  **`dataSources.json`**: Connectivity metadata.
 
-1.  **Tabular Editor**: Open the `semantic-model` folder to inspect the logical model (measures, columns, relationships).
-2.  **Power BI Desktop**: Place the extracted contents into a folder named `MyProject.Dataset`, create a `MyProject.pbip` file next to it, and open it directly.
-3.  **Fabric/Git Integration**: Push the unzipped folder structure to Azure DevOps or GitHub to sync with a Power BI Workspace.
+_Compatible with Power BI Desktop, Tabular Editor 3, and Microsoft Fabric Git Integration._
 
 ---
 
