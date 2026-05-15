@@ -1,0 +1,90 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+@theme {
+  --color-primary: #0ca1b6;
+  --color-primary-hover: #0a8ea1;
+  --color-primary-active: #087989;
+  --color-primary-disabled: #7ecfdc;
+  --color-background: #f5f4f1;
+  --color-surface: #ffffff;
+  --color-text-main: #111827;
+  --color-text-secondary: #64748b;
+  --color-text-muted: #6b7280;
+  --color-border: #e5e7eb;
+  --color-border-dark: #d5d5d5;
+  --color-border-black: #000000;
+  --color-accent: #21808d;
+  --color-accent-disabled: #cbd5e1;
+  --color-container-bg: #f9fafb;
+  --color-card-bg: #ffffff;
+  --color-card-border: #e5e7eb;
+  --color-sidebar-btn: #64748b;
+  --color-sidebar-btn-hover: #f1f5f9;
+  --color-scrollbar-track: #f5f4f1;
+  --color-scrollbar-thumb: #c5c3bf;
+  --color-scrollbar-thumb-hover: #9e9c98;
+  --color-chip-bg: #e3fafc;
+  --color-chip-border: #a6d3f7;
+  --color-chip-text: #172455;
+  --color-chip-hover: #a7eff9;
+  --color-gradient-start: #60a5fa;
+  --color-gradient-end: #a78bfa;
+  --color-bg-gradient-start: #e8dcf9;
+  --color-bg-gradient-end: #d7eff8;
+
+  --font-sans: "Plus Jakarta Sans", system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+  --radius-btn: 6px;
+  --radius-card: 16px;
+  --radius-chip: 9999px;
+  --radius-icon-circle: 50%;
+
+  --shadow-card: 0 3px 6px rgb(224, 237, 244);
+  --shadow-card-hover: 0 6px 14px #b5dade;
+  --shadow-btn: 0 1px 3px rgba(12, 161, 182, 0.35);
+  --shadow-chip: 0 2px 6px rgba(212, 5, 17, 0.15);
+}
+
+:root {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+@layer utilities {
+  .bg-dashboard {
+    background-image:
+      radial-gradient(rgba(141, 155, 174, 0.28) 1px, transparent 1px),
+      linear-gradient(
+        135deg,
+        var(--color-bg-gradient-start) 0%,
+        rgba(255, 255, 255, 0.95) 45%,
+        var(--color-bg-gradient-end) 100%
+      );
+
+    background-size:
+      18px 18px,
+      cover;
+
+    background-position: center, center;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--color-scrollbar-thumb);
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--color-scrollbar-thumb-hover);
+  }
+}

@@ -1,0 +1,38 @@
+# Dependency directories
+node_modules/
+jspm_packages/
+frontend/node_modules/
+venv/
+env/
+.env
+.env.local
+
+# Build outputs
+dist/
+frontend/dist/
+build/
+backend/generated/
+*.py[cod]
+__pycache__/
+*.so
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Project specific
+*.pbip
+*.pbix
+extraction_output/
+logs/
+temp/
