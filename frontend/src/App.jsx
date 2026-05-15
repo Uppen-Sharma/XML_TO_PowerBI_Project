@@ -24,11 +24,11 @@ import Login from "./Login";
  */
 const ProtectedRoute = ({ children }) => {
   const authMode = import.meta.env.VITE_AUTH_MODE || "dev";
-  
+
   if (authMode === "prod") {
     return children; // NGINX + oauth2-proxy already verified the user
   }
-  
+
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
   return isLoggedIn ? children : <Navigate to="/login" replace />;
 };
@@ -63,16 +63,16 @@ const BrandSection = () => (
  * UploadCard Component
  * Refactored for stability at high zoom levels.
  */
-const UploadCard = ({ 
-  file, 
-  isUploading, 
-  error, 
-  isDragOver, 
-  downloadInfo, 
-  onDrop, 
-  onFileChange, 
-  onGenerate, 
-  fileInputRef 
+const UploadCard = ({
+  file,
+  isUploading,
+  error,
+  isDragOver,
+  downloadInfo,
+  onDrop,
+  onFileChange,
+  onGenerate,
+  fileInputRef,
 }) => (
   <div className="bg-card-bg rounded-[var(--radius-card)] shadow-card hover:shadow-card-hover transition-shadow border border-card-border flex flex-col min-h-0 w-full overflow-hidden">
     <div className="p-5 sm:p-8 lg:p-[4vh] flex flex-col min-h-0 flex-grow">
@@ -81,8 +81,12 @@ const UploadCard = ({
           ${isDragOver || file ? "border-primary bg-primary/10" : "border-border hover:border-primary hover:bg-container-bg"}
           ${isDragOver ? "scale-[1.01]" : ""}
         `}
-        onDragOver={(e) => { e.preventDefault(); }}
-        onDragEnter={(e) => { e.preventDefault(); }}
+        onDragOver={(e) => {
+          e.preventDefault();
+        }}
+        onDragEnter={(e) => {
+          e.preventDefault();
+        }}
         onDrop={onDrop}
         onClick={() => fileInputRef.current?.click()}
       >
@@ -95,14 +99,22 @@ const UploadCard = ({
         />
 
         <div className="flex flex-col items-center justify-center space-y-4 pointer-events-none break-all">
-          <div className={`h-14 w-14 sm:h-16 sm:w-16 lg:h-[8vh] lg:w-[8vh] rounded-full flex items-center justify-center mb-1 ${file ? "bg-accent/20 text-accent" : "bg-primary/20 text-primary"}`}>
-            {file ? <CheckCircle className="h-7 w-7 sm:h-8 sm:w-8 lg:h-[4vh] lg:w-[4vh]" /> : <UploadCloud className="h-7 w-7 sm:h-8 sm:w-8 lg:h-[4vh] lg:w-[4vh]" />}
+          <div
+            className={`h-14 w-14 sm:h-16 sm:w-16 lg:h-[8vh] lg:w-[8vh] rounded-full flex items-center justify-center mb-1 ${file ? "bg-accent/20 text-accent" : "bg-primary/20 text-primary"}`}
+          >
+            {file ? (
+              <CheckCircle className="h-7 w-7 sm:h-8 sm:w-8 lg:h-[4vh] lg:w-[4vh]" />
+            ) : (
+              <UploadCloud className="h-7 w-7 sm:h-8 sm:w-8 lg:h-[4vh] lg:w-[4vh]" />
+            )}
           </div>
           <div className="text-[clamp(1rem,1.4vw,1.25rem)] font-medium text-black leading-snug whitespace-nowrap">
             {file ? file.name : "Drag & drop your XML here"}
           </div>
           <p className="text-[clamp(0.875rem,1.2vw,1.1rem)] font-medium text-slate-500 whitespace-nowrap">
-            {file ? `${(file.size / 1024).toFixed(1)} KB` : "or click to browse"}
+            {file
+              ? `${(file.size / 1024).toFixed(1)} KB`
+              : "or click to browse"}
           </p>
         </div>
       </div>
@@ -111,7 +123,9 @@ const UploadCard = ({
       {error && (
         <div className="mt-4 p-4 rounded-xl bg-red-50 border border-red-100 flex items-start space-x-3 text-red-600">
           <AlertCircle className="h-5 w-5 flex-shrink-0 mt-0.5" />
-          <p className="text-xs sm:text-sm font-medium break-words leading-tight">{error}</p>
+          <p className="text-xs sm:text-sm font-medium break-words leading-tight">
+            {error}
+          </p>
         </div>
       )}
 
@@ -124,7 +138,10 @@ const UploadCard = ({
           `}
         >
           {isUploading ? (
-            <><Loader2 className="h-5 w-5 animate-spin" /><span>Processing…</span></>
+            <>
+              <Loader2 className="h-5 w-5 animate-spin" />
+              <span>Processing…</span>
+            </>
           ) : (
             <span>Accelerate PBI</span>
           )}
@@ -198,7 +215,10 @@ const Dashboard = () => {
       const { disk_filename, download_name } = response.data;
       if (!disk_filename) throw new Error("Server did not return a filename.");
 
-      setDownloadInfo({ diskFilename: disk_filename, downloadName: download_name });
+      setDownloadInfo({
+        diskFilename: disk_filename,
+        downloadName: download_name,
+      });
 
       const downloadUrl = `/download?filename=${encodeURIComponent(disk_filename)}`;
       const link = document.createElement("a");
@@ -208,14 +228,19 @@ const Dashboard = () => {
       link.click();
       setTimeout(() => document.body.removeChild(link), 100);
     } catch (err) {
-      setError(err.response?.data?.error ?? err.message ?? "An error occurred.");
+      setError(
+        err.response?.data?.error ?? err.message ?? "An error occurred.",
+      );
     } finally {
       setIsUploading(false);
     }
   }, [file]);
 
   return (
-    <div className="min-h-screen lg:h-screen bg-dashboard lg:overflow-hidden flex flex-col" style={{ fontFamily: "var(--font-sans)" }}>
+    <div
+      className="min-h-screen lg:h-screen bg-dashboard lg:overflow-hidden flex flex-col"
+      style={{ fontFamily: "var(--font-sans)" }}
+    >
       {/* Top Header for Logout */}
       <div className="absolute top-6 right-6 z-20">
         <button
@@ -229,7 +254,7 @@ const Dashboard = () => {
 
       <div className="flex flex-col lg:flex-row flex-grow w-full min-h-0 lg:overflow-hidden">
         <BrandSection />
-        
+
         <div className="flex flex-col lg:w-[55%] flex-grow min-h-0 lg:h-full lg:overflow-hidden">
           <div className="w-full flex flex-col px-4 py-8 lg:px-[5vw] lg:py-[6vh] min-h-full">
             <div className="flex flex-col flex-grow items-center justify-center min-h-0">
@@ -239,8 +264,8 @@ const Dashboard = () => {
                     Extract Data
                   </h3>
                 </div>
-                
-                <UploadCard 
+
+                <UploadCard
                   file={file}
                   isUploading={isUploading}
                   error={error}
